@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sfx_bus"]
+
+[ext_resource type="Script" path="res://scripts/systems/sfx_bus.gd" id="1"]
+
+[node name="SFXBus" type="Node"]
+script = ExtResource("1")
