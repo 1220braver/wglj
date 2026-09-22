@@ -9,12 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://hud" path="res://scenes/ui/hud.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://scenes/systems/sfx_bus.tscn" id="8"]
 [ext_resource type="Script" path="res://scripts/ui/level_flow_ui.gd" id="9"]
+[ext_resource type="Script" path="res://scripts/effects/effect_spawner.gd" id="10"]
 
 [sub_resource type="RectangleShape2D" id="kz_shape"]
 size = Vector2(3500, 64)
 
 [node name="Level01" type="Node2D"]
 script = ExtResource("5")
+
+[node name="EffectSpawner" type="Node2D" parent="."]
+script = ExtResource("10")
 
 [node name="Ground" type="Node2D" parent="."]
 
@@ -24,23 +28,24 @@ script = ExtResource("5")
 position = Vector2(80, 800)
 
 [node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(80, 800)
 
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Enemy_Zone2" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(600, 782)
+position = Vector2(550, 782)
 
 [node name="Enemy_Zone3_A" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(1050, 782)
+position = Vector2(950, 782)
 
 [node name="Enemy_Zone3_B" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(1350, 782)
+position = Vector2(1450, 782)
 
 [node name="Enemy_Zone4" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(1900, 782)
+position = Vector2(2100, 782)
 
 [node name="Enemy_Zone5" parent="Enemies" instance=ExtResource("2")]
-position = Vector2(2500, 782)
+position = Vector2(2650, 782)
 
 [node name="Traps" type="Node2D" parent="."]
 
@@ -48,16 +53,7 @@ position = Vector2(2500, 782)
 position = Vector2(1750, 786)
 
 [node name="Spike_02" parent="Traps" instance=ExtResource("3")]
-position = Vector2(1782, 786)
-
-[node name="Spike_03" parent="Traps" instance=ExtResource("3")]
-position = Vector2(1814, 786)
-
-[node name="Spike_04" parent="Traps" instance=ExtResource("3")]
-position = Vector2(2000, 786)
-
-[node name="Spike_05" parent="Traps" instance=ExtResource("3")]
-position = Vector2(2032, 786)
+position = Vector2(1900, 786)
 
 [node name="BossRoom" type="Node2D" parent="."]
 
@@ -65,7 +61,7 @@ position = Vector2(2032, 786)
 position = Vector2(3100, 780)
 
 [node name="BossRoomTrigger" type="Area2D" parent="."]
-position = Vector2(2750, 400)
+position = Vector2(2750, 500)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossRoomTrigger"]
 
@@ -162,3 +158,49 @@ horizontal_alignment = 1
 [node name="RestartLabel" type="Label" parent="LevelFlowUI/StageCompletePanel/VBox"]
 text = "按 R 重新开始"
 horizontal_alignment = 1
+
+[node name="QuitLabel" type="Label" parent="LevelFlowUI/StageCompletePanel/VBox"]
+text = "按 Q 返回主菜单"
+horizontal_alignment = 1
+
+[node name="ControlsHint" type="Control" parent="LevelFlowUI"]
+visible = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220
+offset_bottom = 140
+
+[node name="Bg" type="ColorRect" parent="LevelFlowUI/ControlsHint"]
+layout_mode = 0
+offset_right = 200
+offset_bottom = 120
+color = Color(0, 0, 0, 0.5)
+
+[node name="VBox" type="VBoxContainer" parent="LevelFlowUI/ControlsHint"]
+layout_mode = 0
+offset_left = 10
+offset_top = 8
+offset_right = 190
+offset_bottom = 112
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="LevelFlowUI/ControlsHint/VBox"]
+text = "操作"
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+
+[node name="L1" type="Label" parent="LevelFlowUI/ControlsHint/VBox"]
+text = "A / D — 移动"
+
+[node name="L2" type="Label" parent="LevelFlowUI/ControlsHint/VBox"]
+text = "Space — 跳跃"
+
+[node name="L3" type="Label" parent="LevelFlowUI/ControlsHint/VBox"]
+text = "J — 攻击"
+
+[node name="L4" type="Label" parent="LevelFlowUI/ControlsHint/VBox"]
+text = "Esc — 暂停"
+
+[node name="L5" type="Label" parent="LevelFlowUI/ControlsHint/VBox"]
+text = "F3 — 调试信息"

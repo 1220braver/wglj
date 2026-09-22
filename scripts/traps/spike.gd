@@ -1,7 +1,8 @@
 extends Area2D
-## Spike — 尖刺陷阱，接触扣血。
+## Spike — 尖刺陷阱，接触扣血 + 轻微击退。
 
-@export var damage: int = 10
+@export var damage: int = 20
+@export var knockback_force: float = 200.0
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -10,6 +11,10 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
+		# 轻微击退：往上弹出
+		if body is CharacterBody2D:
+			body.velocity.y = -knockback_force * 0.6
+			body.velocity.x = sign(body.global_position.x - global_position.x) * knockback_force * 0.3
 
 func _draw() -> void:
 	var w := 32.0

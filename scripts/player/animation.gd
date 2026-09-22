@@ -103,5 +103,11 @@ func trigger_dead() -> void:    set_state(State.DEAD)
 func is_locked() -> bool:
 	return int(current_state) in locked_states
 
+func is_hurt() -> bool:
+	return current_state == State.HURT
+
+func is_dead() -> bool:
+	return current_state == State.DEAD
+
 func _is_playing(anim_name: String) -> bool:
 	return player.sprite.is_playing() and player.sprite.animation == anim_name

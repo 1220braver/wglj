@@ -49,10 +49,15 @@ extends CharacterBody2D
 # 主循环
 # ═══════════════════════════════════════════
 func _physics_process(delta: float) -> void:
+	_update_damage_visual()
+
 	# 受伤/死亡锁定一切
 	if animation_c.is_locked():
 		animation_c.update(input_c.direction)
 		return
+
+	# 重力始终生效（攻击期间也不例外 — 防止空中滞空）
+	movement_c.apply_gravity(delta)
 
 	# 攻击输入：仅冷却完毕时可触发
 	if input_c.attack_just_pressed and attack_c.is_ready():
@@ -60,9 +65,10 @@ func _physics_process(delta: float) -> void:
 		animation_c.trigger_attack()
 		get_tree().call_group("sfx_bus", "play_sfx", "player_attack")
 
-	# 前摇+激活帧锁移动，后摇可移动
+	# 前摇+激活帧锁移动/跳跃，后摇可移动
 	if not attack_c.is_movement_locked():
-		movement_c.apply(delta, input_c.direction, input_c.jump_just_pressed)
+		movement_c.apply_horizontal(delta, input_c.direction)
+		movement_c.apply_jump(input_c.jump_just_pressed)
 
 	move_and_slide()
 
@@ -85,8 +91,23 @@ func is_alive() -> bool:
 
 func respawn() -> void:
 	current_hp = max_hp
+	velocity = Vector2.ZERO
+	visible = true
+	modulate = Color.WHITE
+	attack_c.cancel_attack()
+	health_c.reset_invincible()
 	animation_c.set_state(0)  # State.IDLE
 	global_position = Vector2(80, 800)
+
+func _update_damage_visual() -> void:
+	var t := Time.get_ticks_msec() / 400.0
+	if animation_c.is_hurt():
+		modulate = Color.RED if int(t * 8) % 2 == 0 else Color.WHITE
+	elif health_c.is_invincible():
+		var alpha := 0.4 if int(t * 12) % 2 == 0 else 1.0
+		modulate = Color(1.0, 1.0, 1.0, alpha)
+	else:
+		modulate = Color.WHITE
 
 func _draw() -> void:
 	var t := Time.get_ticks_msec() / 400.0
@@ -126,9 +147,3 @@ func _draw() -> void:
 		sword_y -= 6
 	draw_rect(Rect2(sword_x, sword_y, 3, 18), Color(0.7, 0.7, 0.8))
 	draw_rect(Rect2(sword_x - 1, sword_y - 2, 5, 4), Color(0.5, 0.3, 0.1))
-
-	# HURT / 无敌闪烁
-	if animation_c.current_state == 6:
-		modulate = Color.RED if int(t * 8) % 2 == 0 else Color.WHITE
-	elif health_c.is_invincible():
-		modulate.a = 0.4 if int(t * 12) % 2 == 0 else 1.0

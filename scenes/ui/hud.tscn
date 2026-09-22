@@ -104,47 +104,106 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 20
 offset_top = 60
-offset_right = 300
-offset_bottom = 220
-visible = false
+offset_right = 320
+offset_bottom = 300
 
 [node name="Bg" type="ColorRect" parent="DebugPanel"]
 layout_mode = 0
-offset_right = 280
-offset_bottom = 160
+offset_right = 300
+offset_bottom = 240
 color = Color(0, 0, 0, 0.6)
 
 [node name="FPS" type="Label" parent="DebugPanel"]
 layout_mode = 0
 offset_left = 8
 offset_top = 8
-offset_right = 272
+offset_right = 292
 offset_bottom = 28
 
 [node name="PlayerHP" type="Label" parent="DebugPanel"]
 layout_mode = 0
 offset_left = 8
 offset_top = 32
-offset_right = 272
+offset_right = 292
 offset_bottom = 52
-
-[node name="State" type="Label" parent="DebugPanel"]
-layout_mode = 0
-offset_left = 8
-offset_top = 56
-offset_right = 272
-offset_bottom = 76
 
 [node name="Position" type="Label" parent="DebugPanel"]
 layout_mode = 0
 offset_left = 8
-offset_top = 80
-offset_right = 272
-offset_bottom = 100
+offset_top = 56
+offset_right = 292
+offset_bottom = 76
 
 [node name="EnemyHP" type="Label" parent="DebugPanel"]
 layout_mode = 0
 offset_left = 8
+offset_top = 80
+offset_right = 292
+offset_bottom = 100
+
+[node name="PlayerExt" type="Label" parent="DebugPanel"]
+layout_mode = 0
+offset_left = 8
 offset_top = 104
-offset_right = 272
+offset_right = 292
 offset_bottom = 124
+
+[node name="EnemyDbg" type="Label" parent="DebugPanel"]
+layout_mode = 0
+offset_left = 8
+offset_top = 128
+offset_right = 292
+offset_bottom = 148
+
+[node name="BossDbg" type="Label" parent="DebugPanel"]
+layout_mode = 0
+offset_left = 8
+offset_top = 152
+offset_right = 292
+offset_bottom = 172
+
+[node name="PausePanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Bg" type="ColorRect" parent="PausePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.5)
+
+[node name="VBox" type="VBoxContainer" parent="PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150
+offset_top = -60
+offset_right = 150
+offset_bottom = 60
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="PausePanel/VBox"]
+text = "Paused"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="HintR" type="Label" parent="PausePanel/VBox"]
+text = "R - Restart"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="HintEsc" type="Label" parent="PausePanel/VBox"]
+text = "Esc - Resume"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="HintQ" type="Label" parent="PausePanel/VBox"]
+text = "Q - Quit to Menu"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)

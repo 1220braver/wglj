@@ -8,9 +8,9 @@ extends Node
 @export var damage: int = 20
 @export var attack_range: float = 48.0       # px, 约 1.5 tile
 @export var cooldown: float = 0.35           # 总冷却
-@export var active_frame: float = 0.08       # HitBox 开启窗口
-@export var wind_up: float = 0.05            # 前摇
-@export var recovery: float = 0.1            # 后摇
+@export var active_frame: float = 0.12       # HitBox 开启窗口
+@export var wind_up: float = 0.08            # 前摇
+@export var recovery: float = 0.15           # 后摇
 
 # ═══════════════════════════════════════════
 # 内部状态
@@ -104,9 +104,9 @@ func _enter_ready() -> void:
 func is_attacking() -> bool:
 	return _phase != Phase.READY
 
-## 攻击全程锁移动/跳跃/攻击（前摇+激活+后摇）
+## 仅前摇+激活帧锁移动/跳跃，后摇可移动不可攻击
 func is_movement_locked() -> bool:
-	return _phase != Phase.READY
+	return _phase == Phase.WINDUP or _phase == Phase.ACTIVE
 
 ## 冷却完毕，可发起攻击
 func is_ready() -> bool:

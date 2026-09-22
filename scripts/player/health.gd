@@ -36,6 +36,11 @@ func is_alive() -> bool:
 func is_invincible() -> bool:
 	return _invincible
 
+func reset_invincible() -> void:
+	_invincible = false
+	if is_instance_valid(player):
+		player.modulate = Color.WHITE
+
 ## ── 死亡 1 秒后重生 ──
 func _die_then_respawn() -> void:
 	await player.get_tree().create_timer(1.0).timeout
@@ -48,3 +53,5 @@ func _start_invincible() -> void:
 	_invincible = true
 	await player.get_tree().create_timer(0.6).timeout
 	_invincible = false
+	if is_instance_valid(player):
+		player.modulate = Color.WHITE

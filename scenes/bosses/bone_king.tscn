@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bone_king"]
+[gd_scene load_steps=11 format=3 uid="uid://bone_king"]
 
 [ext_resource type="Script" path="res://scripts/boss/bone_king.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/player/hurt_box.gd" id="2"]
@@ -46,7 +46,10 @@ size = Vector2(44, 66)
 size = Vector2(56, 20)
 
 [sub_resource type="RectangleShape2D" id="slam_shape"]
-size = Vector2(160, 24)
+size = Vector2(120, 24)
+
+[sub_resource type="RectangleShape2D" id="detect_shape"]
+size = Vector2(500, 200)
 
 [sub_resource type="RectangleShape2D" id="ray_shape"]
 radius = 1.0
@@ -77,7 +80,7 @@ shape = SubResource("hurt_shape")
 [node name="PunchHitBox" type="Area2D" parent="."]
 monitoring = false
 monitorable = false
-position = Vector2(32, -30)
+position = Vector2(32, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PunchHitBox"]
 shape = SubResource("punch_shape")
@@ -96,6 +99,13 @@ disabled = true
 enabled = true
 target_position = Vector2(0, 40)
 collision_mask = 1
+
+[node name="DetectionArea" type="Area2D" parent="."]
+monitoring = true
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("detect_shape")
 
 [node name="FrontPoint" type="Marker2D" parent="."]
 position = Vector2(32, 0)
